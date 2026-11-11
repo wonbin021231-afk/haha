@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>클래식 테트리스 | 웹 브라우저 1인용 게임</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <main class="game-container">
+    <!-- 왼쪽/중앙: 메인 게임 보드 -->
+    <section class="board-wrapper">
+      <div class="board-frame">
+        <canvas id="tetris-canvas" width="300" height="600" aria-label="테트리스 게임 보드"></canvas>
+        
+        <!-- 일시정지 오버레이 -->
+        <div id="pause-overlay" class="game-overlay hidden">
+          <div class="overlay-card">
+            <span class="overlay-icon">⏸️</span>
+            <h2 class="overlay-title">일시정지</h2>
+            <p class="overlay-sub">게임이 잠시 멈췄습니다.</p>
+            <button id="resume-btn-overlay" class="btn btn-primary">계속하기</button>
+          </div>
+        </div>
+
+        <!-- 게임 오버 오버레이 -->
+        <div id="game-over-overlay" class="game-overlay hidden">
+          <div class="overlay-card">
+            <span class="overlay-icon">💥</span>
+            <h2 class="overlay-title text-danger">게임 오버</h2>
+            <p class="overlay-sub">새 블록을 놓을 공간이 없습니다.</p>
+            <div class="final-score-box">
+              <span class="final-score-label">최종 점수</span>
+              <span id="final-score-val" class="final-score-number">0</span>
+            </div>
+            <button id="restart-btn-overlay" class="btn btn-primary">다시 시작</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 오른쪽: 정보 및 컨트롤 패널 -->
+    <aside class="side-panel">
+      <!-- 헤더 로고 -->
+      <header class="panel-header">
+        <h1 class="game-title">TETRIS</h1>
+        <p class="game-subtitle">클래식 블록 퍼즐</p>
+      </header>
+
+      <!-- 다음 블록 영역 -->
+      <div class="panel-card next-card">
+        <h2 class="card-title">다음 블록</h2>
+        <div class="next-canvas-wrapper">
+          <canvas id="next-canvas" width="120" height="120"></canvas>
+        </div>
+      </div>
+
+      <!-- 스코어 / 레벨 / 줄 수 영역 -->
+      <div class="panel-card stats-card">
+        <div class="stat-item">
+          <span class="stat-label">점수 (SCORE)</span>
+          <span id="score-display" class="stat-value highlight-score">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-grid">
+          <div class="stat-subitem">
+            <span class="stat-label">레벨 (LEVEL)</span>
+            <span id="level-display" class="stat-value">1</span>
+          </div>
+          <div class="stat-subitem">
+            <span class="stat-label">제거 줄 수 (LINES)</span>
+            <span id="lines-display" class="stat-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 게임 제어 버튼 -->
+      <div class="panel-card controls-btn-card">
+        <button id="pause-btn" class="btn btn-action">
+          <span class="btn-icon" id="pause-icon">⏸️</span>
+          <span id="pause-btn-text">일시정지</span>
+        </button>
+        <button id="restart-btn" class="btn btn-secondary">
+          <span class="btn-icon">🔄</span>
+          <span>다시 시작</span>
+        </button>
+      </div>
+
+      <!-- 조작 안내 카드 -->
+      <div class="panel-card key-guide-card">
+        <h2 class="card-title">조작 안내</h2>
+        <ul class="key-list">
+          <li>
+            <span class="key-badge">←</span>
+            <span class="key-badge">→</span>
+            <span class="key-desc">좌우 이동 (길게 누르면 연속)</span>
+          </li>
+          <li>
+            <span class="key-badge">↓</span>
+            <span class="key-desc">소프트 드롭 (빠른 낙하)</span>
+          </li>
+          <li>
+            <span class="key-badge">↑</span>
+            <span class="key-desc">시계 방향 90° 회전</span>
+          </li>
+          <li>
+            <span class="key-badge space-badge">SPACE</span>
+            <span class="key-desc">하드 드롭 (즉시 착지 및 고정)</span>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
